@@ -1,34 +1,32 @@
-import {takeLatest, call, put, all} from 'redux-saga/effects';
-import {Alert} from 'react-native';
+import { takeLatest, call, put, all } from 'redux-saga/effects';
+import { Alert } from 'react-native';
 import api from '../../../services/api';
 
-import {Action} from './types';
+import { Action } from './types';
 
-import {signInSuccess, signFailure} from './actions';
+import { signInSuccess, signFailure } from './actions';
 
-export function* signIn({payload}: Action) {
+export function* signIn({ payload }: Action) {
   try {
-    const {email, password} = payload;
+    const { email, password } = payload;
     console.tron.log(payload);
     const response = yield call(api.post, 'sessions', {
       email,
       password,
     });
 
-    const {token, user} = response.data;
-
+    const { token, user } = response.data;
+    console.tron.log(response.data);
     yield put(signInSuccess(token, user));
-
-    // history.push('/dashboard');
   } catch (err) {
     Alert.alert('Falha na autenticação, verifique seus dados');
     yield put(signFailure());
   }
 }
 
-export function* signUp({payload}: Action) {
+export function* signUp({ payload }: Action) {
   try {
-    const {name, email, password} = payload;
+    const { name, email, password } = payload;
 
     yield call(api.post, 'users', {
       name,
@@ -36,7 +34,7 @@ export function* signUp({payload}: Action) {
       password,
       provider: true,
     });
-
+    Alert.alert('Conta criada com sucesso');
     // history.push('/');
   } catch (err) {
     Alert.alert('Falha no cadastro, verifique seus dados');
@@ -44,9 +42,9 @@ export function* signUp({payload}: Action) {
   }
 }
 
-export function setToken({payload}: Action) {
+export function setToken({ payload }: Action) {
   if (!payload) return;
-  const {token} = payload.auth;
+  const { token } = payload.auth;
   if (token) {
     api.defaults.headers.Authorization = `Bearer ${token}`;
   }
