@@ -1,26 +1,16 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { FlatList, TouchableOpacity, Alert } from 'react-native';
 
-import { format, addDays, subDays, parseISO } from 'date-fns';
+import { format, addDays, subDays } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { withNavigationFocus } from 'react-navigation';
 import api from '../../services/api';
 import Header from '../../components/Header';
 import Background from '../../components/Background';
+import Meetup from '../../components/Meetup';
 
-import {
-  Container,
-  DateView,
-  DateText,
-  MeetupView,
-  MeetupBanner,
-  MeetupTitle,
-  MeetupDetail,
-  MeetupDetailText,
-  MeetupButton,
-  MeetupButtonText,
-} from './styles';
+import { Container, DateView, DateText } from './styles';
 
 interface Props {
   isFocused: boolean;
@@ -50,21 +40,20 @@ interface Meetup {
   };
 }
 
-function Dashboard() {
+function Dashboard({ isFocused }: Props) {
   const [refreshing, setRefreshing] = useState(false);
   const [page, setPage] = useState(1);
   const [date, setDate] = useState(new Date());
   const [meetups, setMeetups] = useState<Meetup[]>([]);
 
-  async function loadMeetups() {
+  async function loadMeetups(): Promise<Meetup[]> {
     const response = await api.get('openmeetups', {
       params: {
         date: format(date, 'yyyy-MM-dd'),
         page,
       },
     });
-
-    setMeetups([...meetups, ...response.data]);
+    return response.data;
   }
 
   const formatedDate = useMemo(
@@ -73,19 +62,26 @@ function Dashboard() {
   );
 
   useEffect(() => {
-    loadMeetups();
-  }, []);
-
-  useEffect(() => {
-    loadMeetups();
-  }, [date, page]);
+    async function load() {
+      if (isFocused) {
+        console.tron.log('atualizou');
+        const data = await loadMeetups();
+        await setMeetups([...meetups, ...data]);
+      }
+    }
+    load();
+  }, [isFocused, date, page]);
 
   async function nextDate() {
+    setMeetups([]);
     setDate(addDays(date, 1));
+    setPage(1);
   }
 
   async function prevDate() {
+    setMeetups([]);
     setDate(subDays(date, 1));
+    setPage(1);
   }
 
   async function loadMore() {
@@ -98,7 +94,7 @@ function Dashboard() {
     setMeetups([]);
   }
 
-  async function handleSubscription(meetuuId: number) {
+  async function handleButton(meetuuId: number) {
     try {
       await api.post(`/subscriptions/${meetuuId}`);
       Alert.alert('Inscrito com Sucesso');
@@ -126,36 +122,11 @@ function Dashboard() {
           data={meetups}
           keyExtractor={meetup => String(meetup.id)}
           renderItem={({ item }) => (
-            <MeetupView>
-              <MeetupBanner
-                source={{
-                  uri: item.file.url,
-                }}
-              />
-              <MeetupTitle>{item.title}</MeetupTitle>
-
-              <MeetupDetail>
-                <Icon name="event" size={14} color="#999" />
-                <MeetupDetailText>
-                  {format(parseISO(item.date), "dd 'de' MMMM', às' HH'h'", {
-                    locale: pt,
-                  })}
-                </MeetupDetailText>
-              </MeetupDetail>
-              <MeetupDetail>
-                <Icon name="place" size={14} color="#999" />
-                <MeetupDetailText>{item.description}</MeetupDetailText>
-              </MeetupDetail>
-              <MeetupDetail>
-                <Icon name="person" size={14} color="#999" />
-                <MeetupDetailText>
-                  {`Organizado: ${item.user.name}`}
-                </MeetupDetailText>
-              </MeetupDetail>
-              <MeetupButton onPress={() => handleSubscription(item.id)}>
-                <MeetupButtonText>Realizar Inscrição</MeetupButtonText>
-              </MeetupButton>
-            </MeetupView>
+            <Meetup
+              item={item}
+              buttonName="Realizar Inscrição"
+              buttonHandle={handleButton}
+            />
           )}
           onEndReachedThreshold={0.2}
           onEndReached={loadMore}
@@ -168,9 +139,9 @@ function Dashboard() {
 }
 
 Dashboard.navigationOptions = {
-  tabBarLabel: 'Inscrições',
+  tabBarLabel: 'Meetups',
   tabBarIcon: ({ tintColor }: tabBarProps) => (
-    <Icon name="local-offer" size={20} color={tintColor} />
+    <Icon name="format-list-bulleted" size={20} color={tintColor} />
   ),
 };
 

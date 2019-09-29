@@ -5,8 +5,9 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 
 import Dashboard from './pages/Dashboard';
+import Subscription from './pages/Subscription';
 
-const SignRoutes: any = createSwitchNavigator({ SignIn, SignUp });
+const SignRoutes = createSwitchNavigator({ SignIn, SignUp });
 
 export default (isSigned = false) =>
   createAppContainer(
@@ -16,6 +17,7 @@ export default (isSigned = false) =>
         App: createBottomTabNavigator(
           {
             Dashboard,
+            Subscription,
           },
           {
             resetOnBlur: true,
