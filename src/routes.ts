@@ -13,9 +13,24 @@ export default (isSigned = false) =>
     createSwitchNavigator(
       {
         Sign: SignRoutes,
-        App: createBottomTabNavigator({
-          Dashboard,
-        }),
+        App: createBottomTabNavigator(
+          {
+            Dashboard,
+          },
+          {
+            resetOnBlur: true,
+            tabBarOptions: {
+              keyboardHidesTabBar: true,
+              activeTintColor: '#fff',
+              inactiveTintColor: 'rgba(255,255,255,0.6)',
+              style: {
+                backgroundColor: '#2B1A2F',
+                borderTopWidth: 0,
+                height: 64,
+              },
+            },
+          },
+        ),
       },
       {
         initialRouteName: isSigned ? 'App' : 'Sign',
