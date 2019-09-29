@@ -6,6 +6,7 @@ import SignUp from './pages/SignUp';
 
 import Dashboard from './pages/Dashboard';
 import Subscription from './pages/Subscription';
+import Profile from './pages/Profile';
 
 const SignRoutes = createSwitchNavigator({ SignIn, SignUp });
 
@@ -18,6 +19,7 @@ export default (isSigned = false) =>
           {
             Dashboard,
             Subscription,
+            Profile,
           },
           {
             resetOnBlur: true,
