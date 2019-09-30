@@ -31,7 +31,7 @@ interface Props {
 
 export default function SignIn({ navigation }: Props) {
   const dispatch = useDispatch();
-  const passwordRef = useRef(null);
+  const passwordRef: any = useRef();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

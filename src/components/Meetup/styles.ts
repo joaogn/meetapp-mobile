@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import Button from '../Button';
 
 export const MeetupView = styled.View`
   flex-direction: column;
@@ -34,7 +35,7 @@ export const MeetupDetailText = styled.Text`
   line-height: 15px;
   margin-left: 5px;
 `;
-export const MeetupButton = styled.TouchableOpacity`
+export const MeetupButton = styled(Button)`
   height: 40px;
   width: 295px;
   background-color: #f94d6a;
@@ -43,6 +44,7 @@ export const MeetupButton = styled.TouchableOpacity`
   align-self: center;
   align-items: center;
   justify-content: center;
+  opacity: ${props => (props.enabled ? 1 : 0.6)};
 `;
 export const MeetupButtonText = styled.Text`
   font-weight: bold;

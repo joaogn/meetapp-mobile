@@ -24,10 +24,10 @@ interface tabBarProps {
 
 export default function Profile() {
   const dispatch = useDispatch();
-  const emailRef = useRef(null);
-  const oldPasswordRef = useRef(null);
-  const passwordRef = useRef(null);
-  const confirmPasswordRef = useRef(null);
+  const emailRef: any = useRef();
+  const oldPasswordRef: any = useRef();
+  const passwordRef: any = useRef();
+  const confirmPasswordRef: any = useRef();
 
   const profile = useSelector((state: ApplicationState) => state.user.profile);
 

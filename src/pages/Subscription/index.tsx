@@ -29,6 +29,7 @@ interface Meetup {
   updated_at: string;
   banner_id: number;
   user_id: number;
+  past: boolean;
   file: {
     url: string;
     path: string;
@@ -51,10 +52,11 @@ function Subscription({ isFocused }: Props) {
     setMeetups(response.data.map((item: Subscription) => item.meetups));
   }
 
-  async function handleButton(meetuuId: number) {
+  async function handleButton(meetupId: number) {
     try {
-      await api.post(`/subscriptions/${meetuuId}`);
+      await api.delete(`/subscriptions/${meetupId}`);
       Alert.alert('Cancelado com Sucesso');
+      loadSubscription();
     } catch (err) {
       Alert.alert('Falha ao Cancelar');
     }

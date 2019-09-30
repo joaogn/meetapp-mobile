@@ -10,7 +10,6 @@ import {
   MeetupDetail,
   MeetupDetailText,
   MeetupButton,
-  MeetupButtonText,
 } from './styles';
 
 interface Meetup {
@@ -23,6 +22,7 @@ interface Meetup {
   updated_at: string;
   banner_id: number;
   user_id: number;
+  past: boolean;
   file: {
     url: string;
     path: string;
@@ -35,7 +35,7 @@ interface Meetup {
 
 interface Props {
   item: Meetup;
-  buttonName: String;
+  buttonName: string;
   buttonHandle(meetuuId: number): any;
 }
 
@@ -63,10 +63,10 @@ export default function Meetup({ item, buttonName, buttonHandle }: Props) {
       </MeetupDetail>
       <MeetupDetail>
         <Icon name="person" size={14} color="#999" />
-        <MeetupDetailText>{`Organizado: ${item.user.name}`}</MeetupDetailText>
+        <MeetupDetailText>{`Organizado(a): ${item.user.name}`}</MeetupDetailText>
       </MeetupDetail>
-      <MeetupButton onPress={() => buttonHandle(item.id)}>
-        <MeetupButtonText>{buttonName}</MeetupButtonText>
+      <MeetupButton onPress={() => buttonHandle(item.id)} enabled={!item.past}>
+        {buttonName}
       </MeetupButton>
     </MeetupView>
   );

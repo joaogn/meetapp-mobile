@@ -30,6 +30,7 @@ interface Meetup {
   updated_at: string;
   banner_id: number;
   user_id: number;
+  past: boolean;
   file: {
     url: string;
     path: string;
@@ -94,9 +95,10 @@ function Dashboard({ isFocused }: Props) {
     setMeetups([]);
   }
 
-  async function handleButton(meetuuId: number) {
+  async function handleButton(meetupId: number) {
     try {
-      await api.post(`/subscriptions/${meetuuId}`);
+      await api.post(`/subscriptions/${meetupId}`);
+      setMeetups([]);
       Alert.alert('Inscrito com Sucesso');
       setPage(1);
     } catch (err) {
