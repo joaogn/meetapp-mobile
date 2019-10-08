@@ -1,6 +1,7 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { Alert } from 'react-native';
 import api from '../../../services/api';
+import Navigation from '../../../services/navigation';
 
 import { Action } from './types';
 
@@ -34,8 +35,8 @@ export function* signUp({ payload }: Action) {
       password,
       provider: true,
     });
+    Navigation.navigate('SignIn');
     Alert.alert('Conta criada com sucesso');
-    // history.push('/');
   } catch (err) {
     Alert.alert('Falha no cadastro, verifique seus dados');
     yield put(signFailure());
