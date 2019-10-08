@@ -5,7 +5,7 @@ import {
 } from 'react-navigation';
 import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Image, ActivityIndicator } from 'react-native';
+import { Image } from 'react-native';
 
 import { signInRequest } from '../../store/modules/auth/actions';
 
@@ -20,7 +20,6 @@ import {
   Form,
   FormInput,
   SubmitButton,
-  SubmitButtonText,
   SignLink,
   SignLinkText,
 } from './styles';
@@ -66,12 +65,8 @@ export default function SignIn({ navigation }: Props) {
             onChangeText={setPassword}
           />
 
-          <SubmitButton onPress={handleSubmit}>
-            {loading ? (
-              <ActivityIndicator size="small" color="#fff" />
-            ) : (
-              <SubmitButtonText>Entra</SubmitButtonText>
-            )}
+          <SubmitButton onPress={handleSubmit} loading={loading}>
+            Entra
           </SubmitButton>
         </Form>
         <SignLink onPress={() => navigation.navigate('SignUp')}>

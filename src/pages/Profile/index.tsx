@@ -12,7 +12,6 @@ import {
   Form,
   FormInput,
   SubmitButton,
-  SubmitButtonText,
   Separator,
   LogoutButton,
   LogoutButtonText,
@@ -118,9 +117,7 @@ export default function Profile() {
             onChangeText={setConfirmPassword}
           />
 
-          <SubmitButton onPress={handleSubmit}>
-            <SubmitButtonText>Salvar Perfil</SubmitButtonText>
-          </SubmitButton>
+          <SubmitButton onPress={handleSubmit}>Salvar Perfil</SubmitButton>
           <LogoutButton onPress={handleLogout}>
             <LogoutButtonText>Sair do Meetapp</LogoutButtonText>
           </LogoutButton>

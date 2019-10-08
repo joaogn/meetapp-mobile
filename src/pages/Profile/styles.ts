@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import Button from '../../components/Button';
 
 export const Container = styled.View`
   flex: 1;
@@ -39,7 +40,7 @@ export const Separator = styled.View`
   margin: 20px 0 30px;
 `;
 
-export const SubmitButton = styled.TouchableOpacity`
+export const SubmitButton = styled(Button)`
   height: 50px;
   background: #f94d6a;
   border-radius: 4px;
@@ -47,12 +48,6 @@ export const SubmitButton = styled.TouchableOpacity`
   justify-content: center;
   margin-top: 5px;
   margin-bottom: 5px;
-`;
-
-export const SubmitButtonText = styled.Text`
-  color: #fff;
-  font-weight: bold;
-  font-size: 18px;
 `;
 
 export const LogoutButton = styled.TouchableOpacity`

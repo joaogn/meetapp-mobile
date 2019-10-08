@@ -6,3 +6,14 @@ export const Container = styled.SafeAreaView`
   justify-content: flex-start;
   margin-top: 20px;
 `;
+export const MessageBox = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+`;
+export const Message = styled.Text`
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+`;

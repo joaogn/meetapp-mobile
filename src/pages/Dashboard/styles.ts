@@ -25,3 +25,15 @@ export const DateText = styled.Text`
   font-weight: bold;
   margin: 0 10px;
 `;
+
+export const MessageBox = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+`;
+export const Message = styled.Text`
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+`;

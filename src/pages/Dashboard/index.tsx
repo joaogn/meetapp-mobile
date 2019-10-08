@@ -10,7 +10,7 @@ import Header from '../../components/Header';
 import Background from '../../components/Background';
 import Meetup from '../../components/Meetup';
 
-import { Container, DateView, DateText } from './styles';
+import { Container, DateView, DateText, Message, MessageBox } from './styles';
 
 interface Props {
   isFocused: boolean;
@@ -119,22 +119,28 @@ function Dashboard({ isFocused }: Props) {
             <Icon name="chevron-right" size={30} color="#fff" />
           </TouchableOpacity>
         </DateView>
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={meetups}
-          keyExtractor={meetup => String(meetup.id)}
-          renderItem={({ item }) => (
-            <Meetup
-              item={item}
-              buttonName="Realizar Inscrição"
-              buttonHandle={handleButton}
-            />
-          )}
-          onEndReachedThreshold={0.2}
-          onEndReached={loadMore}
-          onRefresh={refreshList}
-          refreshing={refreshing}
-        />
+        {meetups.length === 0 ? (
+          <MessageBox>
+            <Message>Não existe Meetups disponiveis para essa data</Message>
+          </MessageBox>
+        ) : (
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={meetups}
+            keyExtractor={meetup => String(meetup.id)}
+            renderItem={({ item }) => (
+              <Meetup
+                item={item}
+                buttonName="Realizar Inscrição"
+                buttonHandle={handleButton}
+              />
+            )}
+            onEndReachedThreshold={0.2}
+            onEndReached={loadMore}
+            onRefresh={refreshList}
+            refreshing={refreshing}
+          />
+        )}
       </Container>
     </Background>
   );

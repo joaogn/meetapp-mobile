@@ -1,5 +1,6 @@
 // import { Plataform } from 'react-native';
 import styled from 'styled-components/native';
+import Button from '../../components/Button';
 
 /*
 export const Container = styled.KeyboardAvoidingView.attrs({
@@ -38,19 +39,13 @@ export const FormInput = styled.TextInput.attrs({
   align-items: center;
 `;
 
-export const SubmitButton = styled.TouchableOpacity`
+export const SubmitButton = styled(Button)`
   height: 50px;
   background: #f94d6a;
   border-radius: 4px;
   align-items: center;
   justify-content: center;
   margin-top: 5px;
-`;
-
-export const SubmitButtonText = styled.Text`
-  color: #fff;
-  font-weight: bold;
-  font-size: 18px;
 `;
 
 export const SignLink = styled.TouchableOpacity`

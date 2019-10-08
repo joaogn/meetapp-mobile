@@ -16,7 +16,7 @@ export function* signIn({ payload }: Action) {
     });
 
     const { token, user } = response.data;
-    console.tron.log(response.data);
+    api.defaults.headers.Authorization = `Bearer ${token}`;
     yield put(signInSuccess(token, user));
   } catch (err) {
     Alert.alert('Falha na autenticação, verifique seus dados');

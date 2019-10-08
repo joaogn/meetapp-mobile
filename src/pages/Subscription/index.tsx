@@ -9,7 +9,7 @@ import Header from '../../components/Header';
 import Background from '../../components/Background';
 import Meetup from '../../components/Meetup';
 
-import { Container } from './styles';
+import { Container, MessageBox, Message } from './styles';
 
 interface Props {
   isFocused: boolean;
@@ -72,18 +72,24 @@ function Subscription({ isFocused }: Props) {
     <Background>
       <Header />
       <Container>
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={meetups}
-          keyExtractor={meetup => String(meetup.id)}
-          renderItem={({ item }) => (
-            <Meetup
-              item={item}
-              buttonName="Cancelar Inscrição"
-              buttonHandle={handleButton}
-            />
-          )}
-        />
+        {meetups.length === 0 ? (
+          <MessageBox>
+            <Message>Se inscreva no seu primeiro Meetup</Message>
+          </MessageBox>
+        ) : (
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={meetups}
+            keyExtractor={meetup => String(meetup.id)}
+            renderItem={({ item }) => (
+              <Meetup
+                item={item}
+                buttonName="Cancelar Inscrição"
+                buttonHandle={handleButton}
+              />
+            )}
+          />
+        )}
       </Container>
     </Background>
   );
