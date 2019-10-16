@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { FlatList, TouchableOpacity, Alert } from 'react-native';
+import {
+  FlatList,
+  TouchableOpacity,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
 
 import { format, addDays, subDays } from 'date-fns';
 import pt from 'date-fns/locale/pt';
@@ -42,7 +47,7 @@ interface Meetup {
 }
 
 function Dashboard({ isFocused }: Props) {
-  const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [date, setDate] = useState(new Date());
   const [meetups, setMeetups] = useState<Meetup[]>([]);
@@ -65,9 +70,15 @@ function Dashboard({ isFocused }: Props) {
   useEffect(() => {
     async function load() {
       if (isFocused) {
-        console.tron.log('atualizou');
+        if (page === 1) {
+          setLoading(true);
+        }
         const data = await loadMeetups();
         await setMeetups([...meetups, ...data]);
+        setLoading(false);
+      } else {
+        setMeetups([]);
+        setPage(1);
       }
     }
     load();
@@ -87,12 +98,6 @@ function Dashboard({ isFocused }: Props) {
 
   async function loadMore() {
     setPage(page + 1);
-  }
-
-  function refreshList() {
-    setPage(1);
-    setRefreshing(true);
-    setMeetups([]);
   }
 
   async function handleButton(meetupId: number) {
@@ -119,7 +124,9 @@ function Dashboard({ isFocused }: Props) {
             <Icon name="chevron-right" size={30} color="#fff" />
           </TouchableOpacity>
         </DateView>
-        {meetups.length === 0 ? (
+        {loading ? (
+          <ActivityIndicator color="#f94d6a" />
+        ) : meetups.length === 0 ? (
           <MessageBox>
             <Message>Não existe Meetups disponiveis para essa data</Message>
           </MessageBox>
@@ -137,8 +144,6 @@ function Dashboard({ isFocused }: Props) {
             )}
             onEndReachedThreshold={0.2}
             onEndReached={loadMore}
-            onRefresh={refreshList}
-            refreshing={refreshing}
           />
         )}
       </Container>

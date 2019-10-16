@@ -59,7 +59,7 @@ export default function Meetup({ item, buttonName, buttonHandle }: Props) {
       </MeetupDetail>
       <MeetupDetail>
         <Icon name="place" size={14} color="#999" />
-        <MeetupDetailText>{item.description}</MeetupDetailText>
+        <MeetupDetailText>{item.location}</MeetupDetailText>
       </MeetupDetail>
       <MeetupDetail>
         <Icon name="person" size={14} color="#999" />

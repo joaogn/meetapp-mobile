@@ -30,12 +30,13 @@ module.exports = {
     'react/state-in-constructor': 'off',
     'react/static-property-placement': 'off',
     'react/jsx-props-no-spreading': 'off',
-    'no-console': ['error', {allow: ['tron']}],
+    'no-console': ['error', { allow: ['tron'] }],
     camelcase: 'off',
     'no-param-reassign': 'off',
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": "error",
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'error',
     'import/no-cycle': 'off',
+    'no-nested-ternary': 'off',
   },
   settings: {
     'import/resolver': {

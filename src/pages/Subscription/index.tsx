@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, Alert } from 'react-native';
+import { FlatList, Alert, ActivityIndicator } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { withNavigationFocus } from 'react-navigation';
@@ -45,6 +45,7 @@ interface Subscription {
 }
 
 function Subscription({ isFocused }: Props) {
+  const [loading, setLoading] = useState(false);
   const [meetups, setMeetups] = useState<Meetup[]>([]);
   async function loadSubscription() {
     const response = await api.get('subscriptions');
@@ -64,7 +65,11 @@ function Subscription({ isFocused }: Props) {
 
   useEffect(() => {
     if (isFocused) {
+      setLoading(true);
       loadSubscription();
+      setLoading(false);
+    } else {
+      setMeetups([]);
     }
   }, [isFocused]);
 
@@ -72,7 +77,9 @@ function Subscription({ isFocused }: Props) {
     <Background>
       <Header />
       <Container>
-        {meetups.length === 0 ? (
+        {loading ? (
+          <ActivityIndicator color="#f94d6a" />
+        ) : meetups.length === 0 ? (
           <MessageBox>
             <Message>Se inscreva no seu primeiro Meetup</Message>
           </MessageBox>

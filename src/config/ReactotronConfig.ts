@@ -4,9 +4,8 @@ import { reactotronRedux } from 'reactotron-redux';
 import reactotronSaga from 'reactotron-redux-saga';
 
 if (__DEV__) {
-  const tron = Reactotron.configure()
-    .useReactNative({})
-    .setAsyncStorageHandler(AsyncStorage)
+  const tron = Reactotron.configure({ host: '192.168.1.7' }).useReactNative({})
+    .setAsyncStorageHandler!(AsyncStorage)
     .use(reactotronRedux())
     .use(reactotronSaga({}))
     .connect();

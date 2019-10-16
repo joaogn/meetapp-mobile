@@ -46,10 +46,3 @@ export const MeetupButton = styled(Button)`
   justify-content: center;
   opacity: ${props => (props.enabled ? 1 : 0.6)};
 `;
-export const MeetupButtonText = styled.Text`
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 19px;
-  text-align: center;
-  color: #fff;
-`;
