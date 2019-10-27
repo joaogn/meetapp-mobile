@@ -103,7 +103,12 @@ function Dashboard({ isFocused }: Props) {
   async function handleButton(meetupId: number) {
     try {
       await api.post(`/subscriptions/${meetupId}`);
-      setMeetups([]);
+      if (page === 1) {
+        setMeetups(meetups.filter(meetup => meetup.id !== meetupId));
+      } else {
+        setMeetups([]);
+      }
+
       Alert.alert('Inscrito com Sucesso');
       setPage(1);
     } catch (err) {

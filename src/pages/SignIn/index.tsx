@@ -66,7 +66,7 @@ export default function SignIn({ navigation }: Props) {
           />
 
           <SubmitButton onPress={handleSubmit} loading={loading}>
-            Entra
+            Entrar
           </SubmitButton>
         </Form>
         <SignLink onPress={() => navigation.navigate('SignUp')}>
