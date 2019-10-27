@@ -108,7 +108,6 @@ function Dashboard({ isFocused }: Props) {
       } else {
         setMeetups([]);
       }
-
       Alert.alert('Inscrito com Sucesso');
       setPage(1);
     } catch (err) {
